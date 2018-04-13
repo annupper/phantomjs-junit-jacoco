@@ -20,18 +20,19 @@ public class GoogleSearchTest {
 	@Before
 	public void setUp() throws Exception{
 		//note: change the path to the location of your phantomjs executable
-		File path=new File("driver/phantomjs");
-		  System.setProperty("phantomjs.binary.path",path.getPath());
-		  driver = new PhantomJSDriver();
+		//File path=new File("driver/phantomjs");
+		  //System.setProperty("phantomjs.binary.path",path.getPath());
+		 // driver = new PhantomJSDriver();
 	}
 
 	@Test
 	public void testGoogleSearch() {
-		driver.get("http://google.com");
+		//driver.get("http://google.com");
+		system.out.println("helooooo");
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		driver.quit();
+		//driver.quit();
 	}
 }
