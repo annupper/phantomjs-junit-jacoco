@@ -20,7 +20,7 @@ public class GoogleSearchTest {
 	@Before
 	public void setUp() throws Exception{
 		//note: change the path to the location of your phantomjs executable
-		File path=new File("driver/phantomjs");
+		File path=new File("lib/phantomjs");
 		  System.setProperty("phantomjs.binary.path",path.getAbsolutePath());
 		  driver = new PhantomJSDriver();
 	}
