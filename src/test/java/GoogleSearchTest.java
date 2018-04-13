@@ -20,8 +20,8 @@ public class GoogleSearchTest {
 	@Before
 	public void setUp() throws Exception{
 		//note: change the path to the location of your phantomjs executable
-		File path=new File("/var/jenkins_home/workspace/SELENIUM-ANT-JACOCO/driver/phantomjs");
-		  System.setProperty("phantomjs.binary.path",path.getAbsolutePath());
+		File path=new File("driver/phantomjs");
+		  System.setProperty("phantomjs.binary.path",path.getPath());
 		  driver = new PhantomJSDriver();
 	}
 
