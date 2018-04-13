@@ -27,7 +27,11 @@ public class GoogleSearchTest {
 
 	@Test
 	public void testGoogleSearch() {
-		//driver.get("http://google.com");
+		File path=new File("/driver/phantomjs");
+		 System.setProperty("phantomjs.binary.path",path.getPath());
+		 driver = new PhantomJSDriver();
+		driver.get("http://google.com");
+		driver.quit();
 	}
 	
 	@After
