@@ -1,6 +1,6 @@
 
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebElement;
 //import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 //import org.openqa.selenium.phantomjs.PhantomJSDriverService;
@@ -20,19 +20,18 @@ public class GoogleSearchTest {
 	@Before
 	public void setUp() throws Exception{
 		//note: change the path to the location of your phantomjs executable
-		//File path=new File("driver/phantomjs");
-		  //System.setProperty("phantomjs.binary.path",path.getPath());
-		 // driver = new PhantomJSDriver();
+		File path=new File("/driver/phantomjs");
+		  System.setProperty("phantomjs.binary.path",path.getPath());
+		  driver = new PhantomJSDriver();
 	}
 
 	@Test
 	public void testGoogleSearch() {
-		//driver.get("http://google.com");
-		system.out.println("helooooo");
+		driver.get("http://google.com");
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		//driver.quit();
+		driver.quit();
 	}
 }
