@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="simpliestAnt" xmlns:jacoco="antlib:org.jacoco.ant">
+  <property name="main.build.dir" value="build/main"/>
+  <property name="main.src.dir" value="src/main/java"/>
+  <property name="test.build.dir" value="build/test"/>
+  <property name="test.src.dir" value="src/test/java"/>
+  
+  <property name="result.dir" location="./target" />
+  <property name="result.classes.dir" location="${result.dir}/classes" />
+  <property name="result.report.dir" location="${result.dir}/site/jacoco" />
+  <property name="result.exec.file" location="${result.dir}/jacoco.exec" />
+
+  <path id="classpath.test">
+  	<fileset dir="./lib">
+  	        <include name="**/*.jar" />
+  	</fileset>
+    <pathelement location="${main.build.dir}"/>
+  </path>
+  <!--  Import JaCoCo Ant tasks  -->
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar"/>
+    </taskdef>
+  
+  <target name="clean">
+		<delete dir="${result.dir}" />
+</target>
+  
+  <target name="compile">
+    <mkdir dir="${main.build.dir}"/>
+    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false" debug="true"/>
+  </target>
+
+  <target name="test-compile" depends="compile">
+    <mkdir dir="${test.build.dir}"/>
+    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+        <classpath refid="classpath.test"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="test-compile">
+    <!--
+ Wrap test execution with the JaCoCo coverage task 
+-->
+    <echo message="Starting test ..."/>
+	  <jacoco:coverage destfile="target/jacoco.exec">
+        <junit printsummary="yes" haltonfailure="yes" fork="yes">
+            <classpath>
+          <path refid="classpath.test"/>
+          <pathelement location="${test.build.dir}"/>
+        </classpath>
+            <formatter type="plain"/>
+            <formatter type="xml"/>
+            <batchtest fork="true">
+                <fileset dir="${test.src.dir}" includes="**/*Test.java" />
+            </batchtest>
+        </junit>
+    </jacoco:coverage>
+    <fail message="TEST FAILURE" if="failed"/>
+  </target>
+  <target name="report" depends="test">
+		<!--  Create coverage report -->
+		<jacoco:report>
+
+			<!-- This task needs the collected execution data and ... -->
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<!-- the class files and optional source files ... -->
+			<structure name="JaCoCo Ant Example">
+				<classfiles>
+					<fileset dir="${main.build.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${main.src.dir}" />
+				</sourcefiles>
+			</structure>
+
+			<!-- to produce reports in different formats. -->
+			<html destdir="${result.report.dir}" />
+			<csv destfile="${result.report.dir}/report.csv" />
+			<xml destfile="${result.report.dir}/report.xml" />
+		</jacoco:report>
+	</target>
+
+<target name="rebuild" depends="clean,compile,test-compile,test,report" />
+</project>
